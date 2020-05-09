@@ -4336,7 +4336,9 @@ function run() {
                 channel,
                 fields,
             }, process.env.GITHUB_TOKEN, process.env.SLACK_WEBHOOK_URL);
+            core.debug(`before`);
             yield slack.send(yield slack.success(text));
+            core.debug(`before`);
         }
         catch (error) {
             core.error(error.toString());
