@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 import Docker from './docker';
-import { Slack } from './slack';
 
 async function run(): Promise<void> {
   try {
