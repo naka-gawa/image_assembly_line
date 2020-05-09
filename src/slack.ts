@@ -48,12 +48,10 @@ export class Slack {
     if (webhookUrl === undefined) {
       throw new Error('Specify secrets.SLACK_WEBHOOK_URL');
     }
-    core.debug(webhookUrl)
     this.webhook = new IncomingWebhook(webhookUrl);
   }
 
   async success(text: string) {
-    core.debug(`before`);
     const template = await this.payloadTemplate();
     template.attachments[0].color = 'good';
     template.text += this.mentionText(this.with.mention, Success);
