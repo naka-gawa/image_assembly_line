@@ -10736,6 +10736,7 @@ class Slack {
     }
     success(text) {
         return __awaiter(this, void 0, void 0, function* () {
+            core.debug(`before`);
             const template = yield this.payloadTemplate();
             template.attachments[0].color = 'good';
             template.text += this.mentionText(this.with.mention, exports.Success);
