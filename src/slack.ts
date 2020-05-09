@@ -48,6 +48,7 @@ export class Slack {
     if (webhookUrl === undefined) {
       throw new Error('Specify secrets.SLACK_WEBHOOK_URL');
     }
+    core.debug(webhookUrl)
     this.webhook = new IncomingWebhook(webhookUrl);
   }
 
