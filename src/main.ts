@@ -55,7 +55,7 @@ async function run(): Promise<void> {
       process.env.GITHUB_TOKEN,
       process.env.SLACK_WEBHOOK_URL,
     );
-    await slack.send(await slack.success(text));
+    //await slack.send(await slack.success(text));
   } catch (error) {
     core.error(error.toString())
     core.setFailed(error.message)
