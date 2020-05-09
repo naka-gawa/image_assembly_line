@@ -67,7 +67,7 @@ async function run(): Promise<void> {
 
     await docker.build(target)
 
-    await docker.push()
+    //await docker.push()
 
     await slack.send(await slack.success(text));
   } catch (error) {
