@@ -26,7 +26,9 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0",
-    "@actions/exec": "^1.0.3"
+    "@actions/exec": "^1.0.3",
+    "@actions/github": "^2.1.1",
+    "@slack/webhook": "^5.0.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
