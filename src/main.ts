@@ -56,17 +56,6 @@ async function run(): Promise<void> {
       process.env.SLACK_WEBHOOK_URL,
     );
 
-    const target = core.getInput('target')
-    core.debug(`target: ${target}`)
-
-    const imageName = core.getInput('image_name')
-    core.debug(`image_name: ${imageName}`)
-
-    const docker = new Docker(registry, imageName)
-    core.debug(`docker: ${docker.toString()}`)
-
-    await docker.build(target)
-
     await slack.send(await slack.success(text));
   } catch (error) {
     core.error(error.toString())
