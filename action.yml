@@ -42,7 +42,7 @@ inputs:
     required: false
   text:
     description: You can overwrite text.
-    default: ""
+    default: "test"
     required: false
   username:
     description: override the legacy integration's default name.
