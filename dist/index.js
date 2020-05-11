@@ -867,7 +867,7 @@ function run() {
             const url = process.env.SLACK_WEBHOOK_URL;
             const webhook = new IncomingWebhook(url);
             // Send the notification
-            yield webhook.sed({
+            yield webhook.send({
                 text: 'I\'ve got news for you...',
             });
         }

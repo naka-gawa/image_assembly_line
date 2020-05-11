@@ -17,7 +17,7 @@ async function run(): Promise<void> {
     const url = process.env.SLACK_WEBHOOK_URL;
     const webhook = new IncomingWebhook(url);
     // Send the notification
-    await webhook.sed({
+    await webhook.send({
       text: 'I\'ve got news for you...',
     });
   } catch (error) {
