@@ -37,13 +37,9 @@ export class Slack {
   private github?: github.GitHub;
   private with: With;
 
-  constructor(props: With, token?: string, webhookUrl?: string) {
+  constructor(props: With, webhookUrl?: string) {
     this.with = props;
     if (this.with.fields === '') this.with.fields = 'repo,commit';
-
-    if (token !== undefined) {
-      this.github = new github.GitHub(token);
-    }
 
     if (webhookUrl === undefined) {
       throw new Error('Specify secrets.SLACK_WEBHOOK_URL');
@@ -69,18 +65,6 @@ export class Slack {
     template.text += this.mentionText(this.with.mention, Failure);
     template.text += this.insertText(
       ':no_entry: Failed GitHub Actions\n',
-      text,
-    );
-
-    return template;
-  }
-
-  async cancel(text: string) {
-    const template = await this.payloadTemplate();
-    template.attachments[0].color = 'warning';
-    template.text += this.mentionText(this.with.mention, Cancelled);
-    template.text += this.insertText(
-      ':warning: Canceled GitHub Actions\n',
       text,
     );
 

@@ -42,33 +42,10 @@ async function run(): Promise<void> {
         channel,
         fields,
       },
-      process.env.GITHUB_TOKEN,
       process.env.SLACK_WEBHOOK_URL,
     );
 
-    switch (status) {
-      case Success:
-        await slack.send(await slack.success(text));
-        break;
-      case Failure:
-        await slack.send(await slack.fail(text));
-        break;
-      case Cancelled:
-        await slack.send(await slack.cancel(text));
-        break;
-      case Custom:
-        /* eslint-disable no-var */
-        var evalPayload: IncomingWebhookSendArguments = eval(
-          `evalPayload = ${custom_payload}`,
-        );
-        /* eslint-enable */
-        await slack.send(evalPayload);
-        break;
-      default:
-        throw new Error(
-          'You can specify success or failure or cancelled or custom',
-        );
-    }
+    await slack.send(await slack.success(text));
   } catch (error) {
     core.setFailed(error.message);
   }

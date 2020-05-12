@@ -4326,26 +4326,8 @@ function run() {
                 icon_url,
                 channel,
                 fields,
-            }, process.env.GITHUB_TOKEN, process.env.SLACK_WEBHOOK_URL);
-            switch (status) {
-                case slack_1.Success:
-                    yield slack.send(yield slack.success(text));
-                    break;
-                case slack_1.Failure:
-                    yield slack.send(yield slack.fail(text));
-                    break;
-                case slack_1.Cancelled:
-                    yield slack.send(yield slack.cancel(text));
-                    break;
-                case slack_1.Custom:
-                    /* eslint-disable no-var */
-                    var evalPayload = eval(`evalPayload = ${custom_payload}`);
-                    /* eslint-enable */
-                    yield slack.send(evalPayload);
-                    break;
-                default:
-                    throw new Error('You can specify success or failure or cancelled or custom');
-            }
+            }, process.env.SLACK_WEBHOOK_URL);
+            yield slack.send(yield slack.success(text));
         }
         catch (error) {
             core.setFailed(error.message);
@@ -10728,13 +10710,10 @@ exports.Custom = 'custom';
 exports.Always = 'always';
 const groupMention = ['here', 'channel'];
 class Slack {
-    constructor(props, token, webhookUrl) {
+    constructor(props, webhookUrl) {
         this.with = props;
         if (this.with.fields === '')
             this.with.fields = 'repo,commit';
-        if (token !== undefined) {
-            this.github = new github.GitHub(token);
-        }
         if (webhookUrl === undefined) {
             throw new Error('Specify secrets.SLACK_WEBHOOK_URL');
         }
@@ -10755,15 +10734,6 @@ class Slack {
             template.attachments[0].color = 'danger';
             template.text += this.mentionText(this.with.mention, exports.Failure);
             template.text += this.insertText(':no_entry: Failed GitHub Actions\n', text);
-            return template;
-        });
-    }
-    cancel(text) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const template = yield this.payloadTemplate();
-            template.attachments[0].color = 'warning';
-            template.text += this.mentionText(this.with.mention, exports.Cancelled);
-            template.text += this.insertText(':warning: Canceled GitHub Actions\n', text);
             return template;
         });
     }
