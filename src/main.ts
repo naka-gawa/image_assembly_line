@@ -13,6 +13,8 @@ async function run(): Promise<void> {
     commitSHA: process.env.GITHUB_SHA,
     runID: process.env.GITHUB_RUN_ID
   })
+  const jobResult = 'success'
+  const jobReason = 'noneError'
 
   try {
     // REGISTRY_NAME はユーザー側から渡せない様にする
@@ -70,7 +72,7 @@ async function run(): Promise<void> {
     }
 
     const endTime = new Date() // UTC
-    s3.uploadBuildTime(startTime, endTime)
+    s3.uploadBuildTime(startTime, endTime, jobResult, jobReason)
   } catch (e) {
     if (e instanceof BuildError) {
       core.error('image build error')

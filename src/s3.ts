@@ -28,7 +28,9 @@ export async function uploadVulnerability(rowJson: string): Promise<void> {
 
 export async function uploadBuildTime(
   startTime: Date,
-  endTime: Date
+  endTime: Date,
+  jobResult: string,
+  jobReason: string
 ): Promise<void> {
   if (!process.env.METRICS_BUCKET_NAME) {
     throw new Error('No bucket name.')
@@ -41,7 +43,9 @@ export async function uploadBuildTime(
     end_at: convertDateTimeFormat(endTime),
     repository: process.env.GITHUB_REPOSITORY,
     branch: process.env.GITHUB_REF,
-    run_id: process.env.GITHUB_RUN_ID
+    run_id: process.env.GITHUB_RUN_ID,
+    result: jobResult,
+    reason: jobReason
   }
   /* eslint-enable */
 
